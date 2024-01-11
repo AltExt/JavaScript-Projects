@@ -10,6 +10,12 @@ let currentColor = 0;
 let correctCalls = [];
 let incorrectCalls = []
 
+Func();
+
+function Func() {
+	console.log("Hello World");
+}
+
 const COLORS = {//	 R		 G		 B
 	"black":	[	0,   0,   0  ],
 	"white":	[	255, 255, 255],
@@ -39,15 +45,8 @@ function Sleep(ms) {
 }
 
 function RandomWithRange(minimum = 0.0, maximum = 1.0) {
+	return (Math.random() * (maximum - minimum)) + minimum;
 
-	let range = maximum - minimum;
-	let rand = Math.random();
-	let step1 = rand * range;
-	let result = step1 + minimum;
-
-	return result;
-
-	return (Math.random() % (maximum - minimum)) + minimum;
 }
 
 function DrawCircle(canvas_context, xPos, yPos, radius, fill = false) {

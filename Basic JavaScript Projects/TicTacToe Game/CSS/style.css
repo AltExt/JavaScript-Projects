@@ -1,27 +1,23 @@
-.L, .M {
-	border-right: 3px solid black;
-}
-.R, .M {
-	border-left: 3px solid black;
-}
-
-.Top .Mid {
-	border-bottom: 3px solid black;
-}
-
-.Mid, .Bottom {
-	border-top: 3px solid black;
-}
-
 .TTTSquare {
-	width:100;
+	width: 100;
 	height: 100;
 }
 
-.row {
-
+.TTTImage {
+	display: none;
+	width: 70px;
+	height: 70px;
 }
 
-.col-sm {
-	width:100;
+.Wrapper {
+	width: 100px;
+	height: 100px;
+	padding: 14px;
+}
+
+#playField {
+	width: 300px;
+	height: 300px;
+	margin: auto;
+	
 }

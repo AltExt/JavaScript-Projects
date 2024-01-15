@@ -11,22 +11,17 @@
 			<button onclick="OnClick()">Click me!</button>
 			<p class="OnClickParagraph"></p>
 		</div>
-<!--
-		<br>
-
 		<div>
 			<p class="OnClickParagraph"></p>
 		</div>
--->
+
 
 		<div>
 			<div>
 				<canvas id="canvas" width="500" height="500" style="border: 5px solid black;"></canvas>
 			</div>
 			<div>
-				<button id="addCircleButton" onclick="AddCircle()">Add Circle</button>
-				<button id="addRandomCirclesButton" onclick="OnClickLoopAddRandomCircles()">Add Circles</button>
-				<button id="addRandomCirclesFastButton" onclick="RandomCircles()">Add Circles Fast</button>
+				<button id="createGradientButton" onclick="ClickToAddColorGradient()">Add Gradient</button>
 				<button id="clearCanvas" onclick="ClearCanvas()">Clear Canvas</button>
 
 				<!--
@@ -39,8 +34,29 @@
 			</div>
 		</div>
 
+		<div id="contactForm">
+			<form name="contactForm" onsubmit="return ValidateForm()">
+				<label for="fname">First Name</label>
+				<input type="text" class="contactForm" id="fname" name="fname">
+				
+				<label for="lname">Last Name</label>
+				<input type="text" class="contactForm" id="lname" name="lname">
+				
+				<label for="email">Email Address</label>
+				<input type="text" class="contactForm" id="email" name="email">
 
+				<input type="submit" value="Submit">
+			</form>
+		</div>
 
+		<div>
+			<ul>
+				<li onclick="DisplayType(this)" data-character="Batman" id="DC">DC</li>
+				<li onclick="DisplayType(this)" data-character="Thor" id="Marvel">Marvel</li>
+				<li onclick="DisplayType(this)" data-character="Luke" id="Star Wars">Star Wars</li>
+				<li onclick="DisplayType(this)" data-character="Picard" id="Star Trek">Star Trek</li>
+			</ul>
+		</div>
 
 		<script src="JS/main.js"></script>
 	</body>

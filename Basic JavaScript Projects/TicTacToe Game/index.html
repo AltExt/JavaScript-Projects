@@ -16,8 +16,16 @@
 					<div id="playField" class=""></div>
 				</div>
 			</div>
-			<button id="playButton" onclick="GeneratePlayField()">Click to play!</button>
-			<button id="clearButton" onclick="ClearPlayField()">Click to clear!</button>
+			<button id="playButton" onclick="GoToPlayerSelect()">Click to play!</button>
+
+			<button class="Button_Not_Shown_At_Beggining" id="twoPlayerModeButton" onclick="SetMode(0)">Two Players</button>
+			<button class="Button_Not_Shown_At_Beggining" id="computerModeButton" onclick="SetMode(1)">Vs Computer</button>
+
+			<button class="Button_Not_Shown_At_Beggining" id="lowDiffButton" onclick="SetDiff(0)">Low Difficulty</button>
+			<button class="Button_Not_Shown_At_Beggining" id="medDiffButton" onclick="SetDiff(1)">Med Difficulty</button>
+			<button class="Button_Not_Shown_At_Beggining" id="highDiffButton" onclick="SetDiff(2)">Hard Difficulty</button>
+
+			<button class="Button_Not_Shown_At_Beggining" id="playAgainButton" onclick="PlayAgian()">Click to Play Again!</button>
 		</div>
 
 

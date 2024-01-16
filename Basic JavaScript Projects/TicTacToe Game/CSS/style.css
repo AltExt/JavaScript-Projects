@@ -21,3 +21,8 @@
 	margin: auto;
 	
 }
+
+.Button_Not_Shown_At_Beggining {
+	visibility: hidden;
+	
+}

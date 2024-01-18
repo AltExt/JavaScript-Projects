@@ -335,7 +335,6 @@ function CheckForWin() {
 	else return false;
 }
 
-
 function ComputersTurn() {
 	/*  board is as follows: 
 		0	3	6
@@ -487,44 +486,6 @@ function GetWinningMoves(board, player) {
 	const TARGET = 2 * player;
 
 	// vertical threats
-	if (bool) {
-		let v1Threat1 = board[0] + board[1];
-		let v1Threat2 = board[1] + board[2];
-		let v1Threat3 = board[0] + board[2];
-		let v1Pos1 = board[2];
-		let v1Pos2 = board[0];
-		let v1Pos3 = board[1];
-
-		let v2Threat1 = board[3] + board[4];
-		let v2Threat2 = board[4] + board[5];
-		let v2Threat3 = board[3] + board[5];
-		let v2Pos1 = board[4];
-		let v2Pos2 = board[3];
-		let v2Pos3 = board[5];
-
-		let v3Threat1 = board[6] + board[7];
-		let v3Threat2 = board[7] + board[8];
-		let v3Threat3 = board[6] + board[8];
-		let v3Pos1 = board[7];
-		let v3Pos2 = board[6];
-		let v3Pos3 = board[8];
-
-		console.log("v1:");
-		console.log( v1Threat1 + " - " + v1Pos1 );
-		console.log( v1Threat2 + " - " + v1Pos2 );
-		console.log( v1Threat3 + " - " + v1Pos3 );
-		
-		console.log("v2:");
-		console.log( v2Threat1 + " - " + v2Pos1 );
-		console.log( v2Threat2 + " - " + v2Pos2 );
-		console.log( v2Threat3 + " - " + v2Pos3 );
-		
-		console.log("v3:");
-		console.log( v3Threat1 + " - " + v3Pos1 );
-		console.log( v3Threat2 + " - " + v3Pos2 );
-		console.log( v3Threat3 + " - " + v3Pos3 );
-	}
-
 	for (let i = 0; i < board.length; i += 3) {
 		if (board[i] + board[i+1] == TARGET && board[i+2] == 0) {
 			output.push(i+2);
@@ -538,44 +499,6 @@ function GetWinningMoves(board, player) {
 	}
 
 	// horizontal threats
-	if (bool) {
-		let h1Threat1 = board[0] + board[3];
-		let h1Threat2 = board[3] + board[6];
-		let h1Threat3 = board[0] + board[6];
-		let h1Pos1 = board[6];
-		let h1Pos2 = board[0];
-		let h1Pos3 = board[3];
-		
-		let h2Threat1 = board[1] + board[4];
-		let h2Threat2 = board[4] + board[7];
-		let h2Threat3 = board[1] + board[7];
-		let h2Pos1 = board[7];
-		let h2Pos2 = board[1];
-		let h2Pos3 = board[4];
-		
-		let h3Threat1 = board[2] + board[5];
-		let h3Threat2 = board[5] + board[8];
-		let h3Threat3 = board[2] + board[8];
-		let h3Pos1 = board[8];
-		let h3Pos2 = board[2];
-		let h3Pos3 = board[5];
-
-		console.log("h1:");
-		console.log( h1Threat1 + " - " + h1Pos1 );
-		console.log( h1Threat2 + " - " + h1Pos2 );
-		console.log( h1Threat3 + " - " + h1Pos3 );
-		
-		console.log("h2:");
-		console.log( h2Threat1 + " - " + h2Pos1 );
-		console.log( h2Threat2 + " - " + h2Pos2 );
-		console.log( h2Threat3 + " - " + h2Pos3 );
-		
-		console.log("h3:");
-		console.log( h3Threat1 + " - " + h3Pos1 );
-		console.log( h3Threat2 + " - " + h3Pos2 );
-		console.log( h3Threat3 + " - " + h3Pos3 );
-	}
-
 	for (let i = 0; i < 3; i++) {
 		if (board[i] + board[i+3] == TARGET && board[i+6] == 0) {
 			output.push(i+6);
@@ -589,32 +512,6 @@ function GetWinningMoves(board, player) {
 	}
 
 	// diagonal threats
-	if (bool) {
-		let d1Threat1 = board[0] + board[4];
-		let d1Threat2 = board[0] + board[8];
-		let d1Threat3 = board[4] + board[8];
-		let d1Pos1 = board[8];
-		let d1Pos2 = board[4];
-		let d1Pos3 = board[0];
-
-		let d2Threat1 = board[2] + board[4];
-		let d2Threat2 = board[2] + board[6];
-		let d2Threat3 = board[4] + board[6];
-		let d2Pos1 = board[6];
-		let d2Pos2 = board[4];
-		let d2Pos3 = board[2];
-
-		console.log("d1:");
-		console.log( d1Threat1 + " - " + d1Pos1 );
-		console.log( d1Threat2 + " - " + d1Pos2 );
-		console.log( d1Threat3 + " - " + d1Pos3 );
-		
-		console.log("d2:");
-		console.log( d2Threat1 + " - " + d2Pos1 );
-		console.log( d2Threat2 + " - " + d2Pos2 );
-		console.log( d2Threat3 + " - " + d2Pos3 );
-	}
-
 	if (board[0] + board[4] == TARGET && board[8] == 0) {	
 		output.push(8);
 	}

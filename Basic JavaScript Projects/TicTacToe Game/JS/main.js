@@ -6,8 +6,14 @@ let Difficulty = 2;
 let PlayerLastMove = 0;
 let PlayerCanInteract = false;
 
+let hasSomeOneWon = false;
+let winner = 0;
+let winData = [];
+
 const X_SQUARE = "X-Square";
 const O_SQUARE = "O-Square";
+const X_SQ_REP = "x";
+const O_SQ_REP = "o";
 const cols = ["L", "M", "R"];
 const rows = ["Top", "Mid", "Bot"];
 
@@ -29,7 +35,6 @@ function GoToPlayerSelect() {
 	document.getElementById("twoPlayerModeButton").style.visibility = "visible";
 	document.getElementById("computerModeButton").style.visibility = "visible";
 }
-
 
 function SetMode(mode) {
 	Mode = mode;
@@ -58,10 +63,18 @@ function SetDiff(diff) {
 }
 
 function GeneratePlayField() {
+	//<canvas id="canvas" width="300px" height="300px"></canvas>
 
 	let targetDiv = document.getElementById("playField");
 	targetDiv.className = "row no-gutters";
 	let borderStyle = "2px solid black";
+
+	let canvas = document.createElement("canvas");
+	canvas.id = "canvas";
+	canvas.width = 300;
+	canvas.height = 300;
+	canvas.style.display = "none";
+	targetDiv.appendChild(canvas);
 
 	for (let i = 0; i < 3; i++) {
 		let col = document.createElement("div");
@@ -201,14 +214,15 @@ function OnClickFunc(element) {
 		img.style.opacity = 1.0;
 
 		RunOtherTurn();
-}
+	}
 }
 
 function RunOtherTurn() {
 	// check if the player's move won, if not then take a computer turn and check that before passing back to the player, or reset the player's selection for 2 player mode
 
-	if ( CheckForWin() ) {
+	if ( CheckForWin(PlayerSelection) ) {
 		// game over, return
+		AnimateGameEnd();
 		AllowPlayerToPlayAgain();
 	}
 	else {
@@ -218,17 +232,77 @@ function RunOtherTurn() {
 		}
 		else {
 			// mode is PVP_MODE
-			if (PlayerSelection == "x") {
-				PlayerSelection = "o";
+			if (PlayerSelection == X_SQ_REP) {
+				PlayerSelection = O_SQ_REP;
 			}
 			else {
-				PlayerSelection = "x";
+				PlayerSelection = X_SQ_REP;
 			}
 		}
-		if (CheckForWin()) {
+		if (CheckForWin(ComputerSelection)) {
+			AnimateGameEnd();
 			AllowPlayerToPlayAgain();
 		}
 	}
+}
+
+function AnimateGameEnd() {
+	console.log("AnimateGameEnd");
+	if ( winData.length == 1 ) {
+		return;
+	}
+	console.log("winData: " + winData);
+
+	const C_ELEMENT = document.getElementById("canvas");
+	const CANVAS = C_ELEMENT.getContext("2d");
+
+	C_ELEMENT.style.display = "block"
+	let startPoint = GetCentrePointOfSquare(winData[0]);
+	let endPoint = GetCentrePointOfSquare(winData[2]);
+	let startX = startPoint[0], startY = startPoint[1];
+	let endX = endPoint[0], endY = endPoint[1];
+	let drawX = startX, drawY = startY;
+	let distance = Math.sqrt( ((endX - startX) ** 2) + ((endY - startY) ** 2) );
+	
+	const STEP_AMT = 90;
+	const STEP_DST = distance / STEP_AMT;
+
+	function AnimateLine() {
+		const animationLoop = requestAnimationFrame(AnimateLine);
+		CANVAS.beginPath();
+		CANVAS.moveTo(startX, startY);
+		CANVAS.lineTo(drawX, drawY);
+		CANVAS.lineWidth = 5;
+		CANVAS.strokeStyle = "rgba(172, 242, 30, 1.0)"; // ac e2 1d
+		CANVAS.stroke();
+
+		// because of how i'm storing windata i know the 0th element will be top/left
+		// and the 2nd element will be bottom/right
+
+		if ( drawX < endX ) {
+			drawX += STEP_DST;
+		}
+		if ( drawY < endY ) {
+			drawY += STEP_DST;
+		}
+		if (drawX >= endX && drawY >= endY) {
+			cancelAnimationFrame(animationLoop);
+		}
+	}
+	AnimateLine();
+}
+
+function GetCentrePointOfSquare(square) {
+	const CELL_WIDTH = document.getElementById("canvas").width / 3;
+	const CELL_HEIGHT = document.getElementById("canvas").height / 3;
+
+	let y = (square % 3) + 0.5;
+	let x = Math.floor(square / 3) + 0.5;
+
+	x *= CELL_WIDTH;
+	y *= CELL_HEIGHT;
+
+	return [x, y]
 }
 
 function GetBoardState() {
@@ -239,10 +313,10 @@ function GetBoardState() {
 	for (let i = 0; i < elements.length; i++) {
 		let className = elements[i].className;
 		/* */if (className.includes(X_SQUARE)) {
-			board.push(1);
+			board.push(X_SQ_REP);
 		}
 		else if (className.includes(O_SQUARE)) {
-			board.push(-1);
+			board.push(O_SQ_REP);
 		}
 		else {
 			board.push(0);
@@ -252,87 +326,56 @@ function GetBoardState() {
 	return board;
 }
 
-function CheckForWin() {
+function CheckForWin(currentPlayer) {
 
 	let board = GetBoardState();
 
-	let hasSomeOneWon = false;
-	let winner = 0;
+	// helper function
+	function SumParts(parts) {
+		return  board[parts[0]]!=0 &&
+				board[parts[0]]==board[parts[1]] && 
+				board[parts[1]]==board[parts[2]];
+	}
+	
+	/*	board layout
+		0	3	6
+		1	4	7
+		2	5	8
+	*/
 
-	// check vertically
-	if (!hasSomeOneWon) {
-		for (let i = 0; i < board.length; i+=3) {
-			let test = board[i] + board[i+1] + board[i+2];
-			/* */if (test === 3) {
-				hasSomeOneWon = true;
-				winner = 1;
-				break;
-			}
-			else if (test === -3) {
-				hasSomeOneWon = true;
-				winner = -1;
-				break;
-			}
+	for(let i = 0; i < 3; i++) {
+		let horizontal = [i, i+3, i+6, currentPlayer];
+		if (SumParts(horizontal)) {
+			winData = horizontal;
+			return true;
+		}
+
+		let j = i*3;
+		let vertical = [j, j+1, j+2, currentPlayer];
+		if (SumParts(vertical)) {
+			winData = vertical
+			return true;
 		}
 	}
-
-	// check horizontally
-	if (!hasSomeOneWon) {
-		for (let i = 0; i < 3; i++) {
-			let test = board[i] + board[i+3] + board[i+6];
-			/* */if (test === 3) {
-				hasSomeOneWon = true;
-				winner = 1;
-				break;
-			}
-			else if (test === -3) {
-				hasSomeOneWon = true;
-				winner = -1;
-				break;
-			}
-		}
+	
+	let d1 = [0, 4, 8, currentPlayer];
+	if (SumParts(d1)) {
+		winData = d1;
+		return true; 
+	}
+	let d2 = [2, 4, 6, currentPlayer];
+	if (SumParts(d2)) {
+		winData = d2;
+		return true; 
 	}
 
-	// check diagonals
-	if (!hasSomeOneWon) {
-		let d1 = board[0] + board[4] + board[8];
-		let d2 = board[6] + board[4] + board[2];
-
-		/* */if (d1 === 3 || d2 === 3) {
-			hasSomeOneWon = true;
-			winner = 1;
-		}
-		else if (d1 === -3 || d2 === -3) {
-			hasSomeOneWon = true;
-			winner = -1;
+	for (let i = 0; i < board.length; i++) {
+		if (board[i] == 0) {
+			return false;
 		}
 	}
-
-	// check if board is full
-	if (!hasSomeOneWon) {
-		let x = 0;
-		for (let i = 0; i < board.length; i++) {
-			x += Math.abs(board[i]);
-		}
-		if (x >= 9) {
-			hasSomeOneWon = true;
-			winner = -100;
-		}
-	}
-
-	if (hasSomeOneWon) {
-		/* */if (winner == 1) {
-			alert("X Won!");
-		}
-		else if (winner == -1) {
-			alert("O Won!");
-		}
-		else {
-			alert("Draw!");
-		}
-		return true;
-	}
-	else return false;
+	winData = [false];
+	return true;
 }
 
 function ComputersTurn() {
@@ -350,8 +393,6 @@ function ComputersTurn() {
 
 	let compNumber = (PlayerSelection == "x") ? -1: 1;
 	let move = 0;
-	console.log(board);
-	console.log("comp num: " + compNumber);
 	switch(Difficulty) {
 		case LOW_DIFF:
 			move = CompTurnEasy(board, compNumber);

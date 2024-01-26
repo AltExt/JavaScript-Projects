@@ -1,0 +1,101 @@
+label {
+	font-family: monospace;
+}
+
+div {
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+h1, h3 {
+	text-align: center;
+}
+
+.orderDiv {
+	width: 100%;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	padding: 5px;
+}
+
+.disclaimerDiv {
+	width: 292px;
+	bottom: 0px;
+	position: absolute;
+}
+
+.mainContent {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+
+#layout {
+	background-color: #DDDDDD;
+	/*color: whitesmoke;*/
+	width: auto;
+	min-width: 750px;
+	max-width: 1000px;
+	margin: auto;
+	padding: 10px
+}
+
+#orderPanel {
+	width: 100%;
+}
+
+#gridContainer {
+	display: grid;
+	border: none;
+	/* square grid */
+	grid-template-columns: [line0 startline] auto [line1] 19em [line2] auto [line3 midline] auto [line4] 19em [line5] auto [line6 endline];
+	grid-template-rows:    [line0 startline] 2em [line1] 19em [line2] 1em [line3] 1em [line4] 19em [line5] 1em [line6] 1em [line7] 25em [line8] 1em [line9] 1em [line10] 19em [line11] 2em [line12];
+}
+
+#sizeDiv {
+	justify-self: center;
+	grid-column: line1 / line2;
+	grid-row: line1 / line2;
+}
+
+#crustDiv {
+	justify-self: center;
+	grid-column: line4 / line5;
+	grid-row: line1 / line2;
+}
+
+#sauceDiv {
+	justify-self: center;
+	grid-column: line1 / line2;
+	grid-row: line4 / line5;
+}
+
+#cheeseDiv {
+	justify-self: center;
+	grid-column: line4 / line5;
+	grid-row: line4 / line5;
+}
+
+#vegDiv {
+	justify-self: center;
+	grid-column: line1 / line2;
+	grid-row: line7 / line8;
+}
+
+#meatDiv {
+	justify-self: center;
+	grid-column: line4 / line5;
+	grid-row: line7 / line8;
+}
+
+#orderReviewDiv {
+	width: 60%;
+	margin: auto;
+	display: none;
+}
+
+#currentOrder {
+	justify-self: center;
+	grid-column: line1 / line5;
+	grid-row: line10 / line11;
+}

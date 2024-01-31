@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<!--
+			<script src="./React/react.js"></script>
+			<script src="./React/react-dom.js"></script>
+		-->
+		<script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+		<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+		<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+	</head>
+	
+	<body>
+		<div id="likeButtonContainer"></div>
+
+		<script>
+			const CreateElement = React.createElement;
+
+			class LikeButton extends React.Component {
+				constructor(props) {
+					super(props);
+					this.state = {liked:false};
+				}
+
+				// oop here and never mentioned lol great fucking course this is
+				// because we extend from React.Component we are inheriting these methods and need to define our own versions for htis class
+				// be great if the course even mentioned that at all like
+				render() {
+					if (this.state.liked) {
+						return "You clicked the like button!";
+					}
+
+					return CreateElement(
+						"button", {
+							onClick: () => {
+								console.log("clcked!");
+								this.setState({liked:true});
+							},
+						},
+						'Like'
+					);
+				}
+			}
+
+			const domContainer = document.getElementById("likeButtonContainer");
+			ReactDOM.render(CreateElement(LikeButton), domContainer);
+		</script>
+
+		<div id="JSX"></div>
+		<div id="other"></div>
+		<script type="text/babel">
+			class Greeting extends React.Component {
+				render() {
+					return <h1>Hello World!</h1>
+				}
+			}
+			class Test extends React.Component {
+				render() {
+					return (
+					<div id="container" style={ {width: '100%', height: '300px'} }>
+ 						<div id="room" style={ {margin: 'auto', width: '50%', height: '100%', background: 'red'} }>
+							
+						</div>
+					</div> );
+				}
+			}
+
+			ReactDOM.render(<Greeting/>, document.getElementById("JSX"));
+			ReactDOM.render(<Test/>, document.getElementById("other"));
+		</script>
+	</body>
+</html>

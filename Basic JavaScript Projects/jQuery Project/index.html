@@ -21,7 +21,10 @@
 			);
 			$("#2").css({"color":"red"});
 			$("#3").click(function() {
-				$("h1").hide();
+				$("h1").hide("fast");
+			});
+			$("#2").click(function() {
+				$("h1").show("slow");
 			});
 		});
 

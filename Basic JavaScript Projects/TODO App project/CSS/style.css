@@ -1,0 +1,69 @@
+/* Background and font */
+html {
+	font-family: "Avenir Next", Helvetica, sans-serif;
+	font-size: 22px;
+	color: white;
+}
+
+body {
+	background-color: #23272F;
+}
+
+
+/* Main div styling */
+#todo {
+	max-width: 500px;
+	margin: auto;
+}
+
+/* Input div styling */
+.taskInputButton {
+	margin-top: 5px;
+	font-size: 20px;
+}
+
+#clearAll {
+	float: right;
+}
+
+#task {
+	width: 80%;
+	margin: auto;
+}
+
+/* Todo List styling */
+.listButtonContainer {
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin-right: 5px;
+}
+
+.clear_button {
+	position: relative;
+	top: -5px;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+}
+
+#todoListContainer {
+	background-color: #243539;
+	border-radius: 30px;
+	padding: 15px;
+}
+
+/* Footer css */
+#footerDiv {
+	border: 1px solid black;
+	width: 50%;
+	margin: auto;
+}
+
+footer {
+	text-align: center;
+	width: 100%;
+	position: fixed;
+	bottom:0;
+}

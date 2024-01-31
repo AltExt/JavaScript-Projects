@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang = "en">
+	<head>
+		<title> Title </title>
+		<meta charset = "utf-8">
+		<link rel="stylesheet" href="CSS/style.css">
+
+		<!-- Bootstrap CSS -->
+	</head>
+
+	<body onload="Setup()">
+		<div id="todo">
+			<div id="inputContainer">	
+				<label for="task">Task:</label>
+				<input type="text" name="task" id="task">
+				<button class="taskInputButton" id="addItem" onclick="AddItemToList()">Add Item</button>
+				<button class="taskInputButton" id="clearAll" onclick="ClearLocalStorage()">Click to remove all tasks</button>
+			</div>
+
+			<hr>
+			
+			<div id="todoListContainer">
+				<ol id="todoList">
+
+				</ol>
+			</div>
+		</div>
+
+
+
+
+
+		<script src="JS/main.js"></script>
+	</body>
+
+	<footer>
+		<div id="footerDiv">
+			<p>FOOTER STUCK TO BOTTOM</p>
+		</div>
+	</footer>
+</html>
